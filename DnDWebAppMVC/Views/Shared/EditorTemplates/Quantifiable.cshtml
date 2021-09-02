@@ -1,0 +1,16 @@
+﻿@model DnDWebAppMVC.Models.Bases.Quantifiable
+
+<div id="describable-edit-container">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-1 justify-content-between">
+        <label asp-for="Name" class="control-label col-2 pt-2"></label>
+        <input id="name-input" asp-for="Name" class="form-control col-3" />
+        <label asp-for="Value" class="control-label col-2 pt-2"></label>
+        <input asp-for="Value" class="form-control col-2" />
+        <input class="btn btn-dark btn-remove-quantifiable col-1" type="button" id="btnRemoveQuantifiable" value="X" />
+    </div>
+    <div class="row mb-1">
+        <span asp-validation-for="Name" class="text-danger col-6"></span>
+        <span asp-validation-for="Value" class="text-danger col-6"></span>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if((bool)ViewData["Known"])
+    {
+        <div>
+            <h2>Join a Game!</h2>
+
+            <form asp-controller="GameRooms" asp-action="Join" id="form">
+                <div class="room-finder row justify-content-between pt-2 m-2">
+                    <label for="RoomKey" class="control-label col-2 pt-1">Enter Room Key</label>
+                    <input name="RoomKey" class="form-control col-2" type="text" />
+                    <select name="CharacterId" class="col-4 form-control" asp-items="@ViewData["Characters"] as IEnumerable<SelectListItem>"></select>
+                    <input type="submit" value="Join" class="btn btn-primary col-2" />
+                </div>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p>Please log in to use the site.</p>
+    }
+</div>
+
+<style>
+    .room-finder {
+        width: 78%;
+    }
+</style>

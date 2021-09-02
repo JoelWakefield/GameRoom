@@ -1,0 +1,18 @@
+﻿@model DnDWebAppMVC.Models.Character
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>@Model.Name</h4>
+<hr />
+
+@Html.EditorForModel()
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" src="~/js/character.js"></script>
+}

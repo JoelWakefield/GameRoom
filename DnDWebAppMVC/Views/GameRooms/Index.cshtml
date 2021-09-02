@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DnDWebAppMVC.Models.GameRoom>
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Game Rooms</h1>
+
+@if (Model.Any(m => m.IsActive))
+{
+    var activeRoom = Model.FirstOrDefault(m => m.IsActive);
+
+<div>
+    <a asp-action="Details" asp-route-id="@activeRoom.Id">@activeRoom.Name</a> |
+    <form asp-action="Open" asp-route-id="@activeRoom.Id" id="form">
+        <select name="CharacterId" asp-items="@ViewData["Characters"] as IEnumerable<SelectListItem>"></select>
+        <input type="submit" value="Open" class="btn btn-primary" />
+    </form>
+</div>
+}
+else
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<h3>Closed Rooms</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(model => !model.IsActive))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

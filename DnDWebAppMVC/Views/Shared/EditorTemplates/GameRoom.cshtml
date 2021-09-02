@@ -1,0 +1,22 @@
+﻿@model GameRoom
+
+<div>
+    <form asp-action="@ViewData["EditType"]" id="form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.EditorFor(model => model.Name)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd>@Html.EditorFor(model => model.Description)</dd>
+            <dt>@Html.DisplayNameFor(model => model.OwnerId)</dt>
+            <dd>@Html.DropDownListFor(model => model.OwnerId, ViewData["Profiles"] as IEnumerable<SelectListItem>)</dd>
+        </dl>
+
+        <input type="submit" value="@ViewData["SubmitLabel"]" class="btn btn-primary" />
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

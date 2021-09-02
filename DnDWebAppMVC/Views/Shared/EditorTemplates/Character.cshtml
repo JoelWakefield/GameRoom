@@ -1,0 +1,161 @@
+﻿@model DnDWebAppMVC.Models.Character
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="@ViewData["EditType"]" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div id="header" class="parchment-light">
+                <div class="row mb-1 justify-content-around">
+                    <div class="col-6 form-group">
+                        <h5 class="pt-1">
+                            @Html.DisplayNameFor(model => model.Name) -
+                            @Html.EditorFor(model => model.Name)
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </h5>
+                    </div>
+                    <div class="col-6 form-group">
+                        <h5 class="pt-1">
+                            @Html.DisplayNameFor(model => model.Class) -
+                            @Html.EditorFor(model => model.Class)
+                            <span asp-validation-for="Class" class="text-danger"></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="row justify-content-around">
+                    <div class="col-6 form-group">
+                        <h5 class="pt-1">
+                            @Html.DisplayNameFor(model => model.Level) -
+                            @Html.EditorFor(model => model.Level)
+                            <span asp-validation-for="Level" class="text-danger"></span>
+                        </h5>
+                    </div>
+                    <div class="col-6 form-group">
+                        <h5 class="pt-1">
+                            @Html.DisplayNameFor(model => model.Race) -
+                            @Html.EditorFor(model => model.Race)
+                            <span asp-validation-for="Race" class="text-danger"></span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div id="body">
+                <div class="card-deck mb-4">
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Stats)</h5>
+                            <div id="statsContainer">
+                                @Html.EditorFor(model => model.Stats)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddStat" value="Add Stat" />
+                        </div>
+                    </div>
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Attributes)</h5>
+                            <div id="attributesContainer">
+                                @Html.EditorFor(model => model.Attributes)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddAttribute" value="Add Attribute" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck mb-4">
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Abilities)</h5>
+                            <div id="abilitiesContainer">
+                                @Html.EditorFor(model => model.Abilities)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddAbility" value="Add Ability" />
+                        </div>
+                    </div>
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Skills)</h5>
+                            <div id="skillsContainer">
+                                @Html.EditorFor(model => model.Skills)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddSkill" value="Add Skill" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck mb-4">
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Items)</h5>
+                            <div id="itemsContainer">
+                                @Html.EditorFor(model => model.Items)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddItem" value="Add Item" />
+                        </div>
+                    </div>
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Weapons)</h5>
+                            <div id="weaponsContainer">
+                                @Html.EditorFor(model => model.Weapons)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddWeapon" value="Add Weapon" />
+                        </div>
+                    </div>
+                    <div class="card parchment-light" style="width: 18rem;">
+                        <div class="card-body form-group">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Spells)</h5>
+                            <div id="spellsContainer">
+                                @Html.EditorFor(model => model.Spells)
+                            </div>
+                            <input class="btn btn-dark btn-add-item" type="button" id="btnAddSpell" value="Add Spell" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="currency" class="parchment-light">
+                <div class="row mb-1 justify-content-around">
+                    <label asp-for="Money.Copper" class="control-label col-1 pt-2"></label>
+                    <input asp-for="Money.Copper" class="form-control col-1" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+
+                    <label asp-for="Money.Silver" class="control-label col-1 pt-2"></label>
+                    <input asp-for="Money.Silver" class="form-control col-1" />
+                    <span asp-validation-for="Class" class="text-danger"></span>
+
+                    <label asp-for="Money.Electrum" class="control-label col-1 pt-2"></label>
+                    <input asp-for="Money.Electrum" class="form-control col-1" />
+                    <span asp-validation-for="Level" class="text-danger"></span>
+
+                    <label asp-for="Money.Gold" class="control-label col-1 pt-2"></label>
+                    <input asp-for="Money.Gold" class="form-control col-1" />
+                    <span asp-validation-for="Level" class="text-danger"></span>
+
+                    <label asp-for="Money.Platinum" class="control-label col-1 pt-2"></label>
+                    <input asp-for="Money.Platinum" class="form-control col-1" />
+                    <span asp-validation-for="Race" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 float-right">
+                    <div class="form-group">
+                        <input type="submit" value="@ViewData["SubmitLabel"]" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<style>
+    .parchment-light {
+        background-color: lightgreen;
+        border-radius: 10px;
+        padding: 1em 2em;
+        margin: 0 0 1em 0;
+    }
+</style>

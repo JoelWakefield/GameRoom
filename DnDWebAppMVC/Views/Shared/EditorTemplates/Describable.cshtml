@@ -1,0 +1,18 @@
+﻿@model DnDWebAppMVC.Models.Bases.Describable
+
+<div id="quantifiable-edit-container">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-1 justify-content-between">
+        <label asp-for="Name" class="control-label col-2 pt-2"></label>
+        <input asp-for="Name" class="form-control col-8" />
+        <input class="btn btn-dark btn-remove-describable col-1" type="button" id="btnRemoveDescribable" value="X" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="row mb-2">
+        <label asp-for="Description" class="control-label col-12"></label>
+        <div class="col-12 justify-content-center">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control col-12" })
+        </div>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+</div>
