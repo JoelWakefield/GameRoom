@@ -11,11 +11,11 @@
 {
     var activeRoom = Model.FirstOrDefault(m => m.IsActive);
 
-<div>
-    <a asp-action="Details" asp-route-id="@activeRoom.Id">@activeRoom.Name</a> |
-    <form asp-action="Open" asp-route-id="@activeRoom.Id" id="form">
-        <select name="CharacterId" asp-items="@ViewData["Characters"] as IEnumerable<SelectListItem>"></select>
-        <input type="submit" value="Open" class="btn btn-primary" />
+<div class="row justify-content-center">
+    <a class="col-2" asp-action="Details" asp-route-id="@activeRoom.Id">@activeRoom.Name</a> | 
+    <form class="col-8" asp-action="Open" asp-route-id="@activeRoom.Id" id="form">
+        <select class="col-4" name="CharacterId" asp-items="@ViewData["Characters"] as IEnumerable<SelectListItem>"></select>
+        <input type="submit" value="Open" class="btn btn-primary col-2" />
     </form>
 </div>
 }

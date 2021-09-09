@@ -33,8 +33,8 @@ namespace DnDWebAppMVC.Data {
 
             // Create a new instance of the Cosmos Client
             using (var client = new CosmosClient(
-                _configuration.GetConnectionString("EndpointUrl"),
-                _configuration.GetConnectionString("PrimaryKey")))
+                _configuration["ConnectionStrings:EndpointUrl"],
+                _configuration["ConnectionStrings:PrimaryKey"]))
             {
                 Database database = client.GetDatabase(databaseId);
                 Container container = database.GetContainer(containerId[0]);

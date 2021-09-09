@@ -180,10 +180,18 @@ namespace DnDWebAppMVC.Controllers
             if (room == null)
                 return NotFound();
 
+            var message = new Message
+            {
+                SenderId = character.OwnerId,
+                SenderName = character.Name,
+                RoomId = room.Id
+            };
+
             var game = new Game()
             {
                 Room = room,
                 PlayerCharacter = character,
+                CurrentMessage = message,
                 Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
                 Characters = _characterHelper.Get()
             };
@@ -217,11 +225,19 @@ namespace DnDWebAppMVC.Controllers
             if (room == null)
                 return NotFound();
 
+            var message = new Message
+            {
+                SenderId = character.OwnerId,
+                SenderName = character.Name,
+                RoomId = room.Id
+            };
+
             var game = new Game()
             {
                 Room = room,
                 PlayerCharacter = character,
-                Messages = _messageHelper.Get(character.OwnerId,room.OwnerId),
+                CurrentMessage = message,
+                Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
                 Characters = _characterHelper.Get()
             };
 

@@ -31,10 +31,10 @@ namespace DnDWebAppMVC
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddDbContext<AzureSQLDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("AzureSQLConnection")));
+                    Configuration["ConnectionStrings:AzureSQLConnection"]));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => {
@@ -49,7 +49,10 @@ namespace DnDWebAppMVC
             services.AddSingleton<CharacterHelper>();
             services.AddSingleton<ChatHelper>();
 
-            services.AddSignalR();
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
 
             services.AddSession(options =>
             {

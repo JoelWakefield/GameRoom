@@ -9,20 +9,21 @@ namespace DnDWebAppMVC.Helpers
     public class ChatHelper
     {
         public List<Message> Messages { get; set; }
-        public List<string> Users { get; set; }
+        public List<Character> Characters { get; set; }
+        public GameRoom GameRoom { get; set; }
 
         public ChatHelper()
         {
             Messages = new List<Message>();
-            Users = new List<string>();
+            Characters = new List<Character>();
         }
 
-        public List<Message> GetPrivateMessages(Guid playerId, Guid ownerId)
+        public List<Message> GetFilteredMessages(Guid playerId, Guid ownerId)
         {
+            List<Message> messages = new List<Message>();
+
             if (playerId != ownerId)
-                return Messages
-                    .Where(m => (m.IsPrivate && m.SenderId == ownerId) || !m.IsPrivate)
-                    .ToList();
+                return Messages.Where(m => !m.IsPrivate || (m.IsPrivate && (m.ReceiverId == playerId || m.SenderId == playerId))).ToList();
             else
                 return Messages.ToList();
         }

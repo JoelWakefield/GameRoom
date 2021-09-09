@@ -14,6 +14,20 @@ namespace DnDWebAppMVC
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            //var host = new HostBuilder()
+            //    .ConfigureAppConfiguration((hostContext, builder) =>
+            //    {
+            //        // Add other providers for JSON, etc.
+
+            //        builder.AddUserSecrets<Program>();
+
+            //        if (hostContext.HostingEnvironment.IsDevelopment())
+            //        {
+            //        }
+            //    })
+            //    .Build();
+
+            //host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

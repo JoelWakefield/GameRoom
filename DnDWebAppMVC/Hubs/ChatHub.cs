@@ -13,7 +13,7 @@ namespace DnDWebAppMVC.Hubs
     {
         private readonly ChatHelper _chatHelper;
 
-        public ChatHub(MessageHelper messageHelper, ChatHelper chatHelper)
+        public ChatHub(ChatHelper chatHelper)
         {
             _chatHelper = chatHelper;
         }
@@ -28,37 +28,56 @@ namespace DnDWebAppMVC.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task ConnectUser(string username)
+        public async Task ConnectUser(Character character, Guid hostId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, username);
-            await Clients.Group(username).SendAsync("LoadChatRoom", _chatHelper.Users, _chatHelper.Messages);
-            
-            _chatHelper.Users.Add(username);
-            await Clients.All.SendAsync("UserEntered", username);
+            await Groups.AddToGroupAsync(
+                Context.ConnectionId, 
+                character.OwnerId.ToString()
+            );
+            await Clients.Group(character.OwnerId.ToString()).SendAsync(
+                "LoadChatRoom", 
+                _chatHelper.Characters, 
+                _chatHelper.GetFilteredMessages(character.OwnerId, hostId)
+            );
+
+            _chatHelper.Characters.Add(character);
+            await Clients.All.SendAsync("UserEntered", character);
         }
 
-        public async Task DisconnectUser(string username)
+        public async Task DisconnectUser(Character character)
         {
-            _chatHelper.Users.Remove(username);
+            _chatHelper.Characters.Remove(character);
 
-            await Clients.All.SendAsync("UserLeft", username);
+            await Clients.All.SendAsync("UserLeft", character);
         }
 
-        public async Task SendPublicMessage(string sender, string message)
+        public async Task SendPublicMessage(Message message)
         {
-            _chatHelper.Messages.Add(new Message()
-            {
-                SenderName = sender,
-                Text = message
-            });
+            message.Id = Guid.NewGuid();
+            message.SentOn = DateTime.Now;
 
-            await Clients.All.SendAsync("ReceiveMessage", sender, message);
+            _chatHelper.Messages.Add(message);
+
+            await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
-        public async Task SendPrivateMessage(string receiver, string sender, string message)
+        public async Task SendPrivateMessage(Message message)
         {
-            await Clients.Group(sender).SendAsync("ReceiveMessage", sender, message);
-            await Clients.Group(receiver).SendAsync("ReceiveMessage", sender, message);
+            message.Id = Guid.NewGuid();
+            message.SentOn = DateTime.Now;
+
+            _chatHelper.Messages.Add(message);
+
+            await Clients.Group(message.SenderId.ToString()).SendAsync("ReceiveMessage", message);
+            await Clients.Group(message.ReceiverId.ToString()).SendAsync("ReceiveMessage", message);
         }
+
+
+        //private async Task<UserProfile> GetProfile(Guid id)
+        //{
+        //    var userId = AuthHelper.GetOid(User);
+        //    return await _azureSQL.UserProfiles
+        //        .FirstOrDefaultAsync(p => p.Id == id);
+        //}
     }
 }

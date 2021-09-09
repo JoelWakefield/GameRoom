@@ -10,12 +10,12 @@
         <h1>@Model.Room.Name</h1>
         <div>Joined as : <b><span id="username-display">@Model.PlayerCharacter.Name</span></b></div>
         <hr />
-        <p><i>@ViewData["OwnerName"]'s Room</i></p>
+        <p><i id="Room_OwnerName">@ViewData["OwnerName"]'s Room</i></p>
         <p>@Model.Room.Description</p>
         <h4>Room Key: @Model.Room.Password</h4>
     </div>
     
-    <div id="message-container" style="display: none;">
+    <div id="message-container">
         <ul id="message-list" style="list-style-type:none;"></ul>
     </div>
 
@@ -25,6 +25,8 @@
             <input type="hidden" asp-for="Room.OwnerId" />
             <input type="hidden" asp-for="PlayerCharacter.OwnerId" />
             <input type="hidden" asp-for="PlayerCharacter.Name" />
+            <input type="hidden" asp-for="PlayerCharacter" />
+            <input type="hidden" asp-for="CurrentMessage" />
 
             <div class="col-lg-10 text-lg-left">
                 <textarea id="message" asp-for="CurrentMessage.Text"></textarea>
@@ -75,6 +77,12 @@
         width: 90%;
         height: 36px;
         border-radius: 6px;
+    }
+    .message {
+        max-width: 100%;
+        border: solid 2px rgb(30 52 75 / 0.60);
+        border-radius: 10px;
+        margin: 0.4em auto 0 auto;
     }
 </style>
 
