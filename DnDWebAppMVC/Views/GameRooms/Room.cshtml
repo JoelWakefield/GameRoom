@@ -6,17 +6,21 @@
 }
 
 <div class="text-center">
-    <div class="header">
-        <h1>@Model.Room.Name</h1>
-        <div>Joined as : <b><span id="username-display">@Model.PlayerCharacter.Name</span></b></div>
-        <hr />
-        <p><i id="Room_OwnerName">@ViewData["OwnerName"]'s Room</i></p>
-        <p>@Model.Room.Description</p>
-        <h4>Room Key: @Model.Room.Password</h4>
+    <div class="header row justify-content-around mb-2">
+        <h2 class="col-3">@Model.Room.Name</h2> | 
+        <h2 class="col-3"><i id="Room_OwnerName">@ViewData["OwnerName"]</i></h2> | 
+        <h2 class="col-3">Room Key: @Model.Room.Password</h2>
     </div>
+    <hr />
     
-    <div id="message-container">
-        <ul id="message-list" style="list-style-type:none;"></ul>
+    <div class="row justify-content-around content-wrapper">
+        <div id="message-container col-lg-6">
+            <ul id="message-list" class="pl-0"></ul>
+        </div>
+
+        <div id="character-sheet col-lg-6">
+            @Html.DisplayFor(model => model.PlayerCharacter)
+        </div>
     </div>
 
     <div class="bottom-center text-center" id="new-message">
@@ -50,6 +54,7 @@
     </div>
 </div>
 
+
 <style>
     .bottom-center
     {
@@ -59,14 +64,19 @@
         left: 22%;
         right: 22%;
     }
+    #message-list {
+        list-style-type: none;
+    }
     #message-container {
-        max-width: 88%;
+        background-color: deepskyblue;
         height: 500px;
-        margin: 1em auto;
         border: solid 3px rgb(5 72 87 / 0.90);
         border-radius: 10px;
         padding: 4px;
         overflow-y: scroll;
+    }
+    #character-sheet {
+        background-color: antiquewhite;
     }
     textarea
     {
@@ -84,7 +94,11 @@
         border-radius: 10px;
         margin: 0.4em auto 0 auto;
     }
+    .content-wrapper {
+        width: 96%;
+    }
 </style>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

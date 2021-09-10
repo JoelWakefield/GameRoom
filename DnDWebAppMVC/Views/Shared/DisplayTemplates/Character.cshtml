@@ -1,0 +1,101 @@
+﻿@model Character
+
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+
+    <div id="header" class="row mb-2 justify-content-around parchment-light">
+        <div class="col-4">
+            <h5 class="pt-1">
+                @Html.DisplayNameFor(model => model.Class) -
+                @Html.DisplayFor(model => model.Class)
+            </h5>
+        </div>
+        <div class="col-2">
+            <h5 class="pt-1">
+                @Html.DisplayNameFor(model => model.Level) -
+                @Html.DisplayFor(model => model.Level)
+            </h5>
+        </div>
+        <div class="col-4">
+            <h5 class="pt-1">
+                @Html.DisplayNameFor(model => model.Race) -
+                @Html.DisplayFor(model => model.Race)
+            </h5>
+        </div>
+    </div>
+
+    <div id="body">
+        <div class="card-deck mb-4">
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Stats)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Stats)
+                    </p>
+                </div>
+            </div>
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Attributes)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Attributes)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-deck mb-4">
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Abilities)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Abilities)
+                    </p>
+                </div>
+            </div>
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Skills)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Skills)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-deck mb-4">
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Items)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Items)
+                    </p>
+                </div>
+            </div>
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Weapons)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Weapons)
+                    </p>
+                </div>
+            </div>
+            <div class="card parchment-light">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Spells)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Spells)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .parchment-light {
+        background-color: lightgreen;
+        border-radius: 10px;
+    }
+</style>
