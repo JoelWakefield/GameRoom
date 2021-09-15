@@ -14,18 +14,21 @@ var messageInput = document.getElementById('message');
 
 //  set username upon landing
 function SetUsername() {
+    player = JSON.parse($('#PlayerCharacter').val());
+    message = JSON.parse($('#CurrentMessage').val());
+
     //  verify username
-    var usernameinput = document.getElementById('username-display').innerText;
+    var usernameinput = player.name;
+    message.senderName = player.name;
+    message.senderId = player.ownerId;
+
     if (usernameinput === "")
         return console.log('there is no username');
 
     username = usernameinput;
 
     roomOwnerId = $('#Room_OwnerId').val();
-    roomOwnerName = $('#Room_OwnerName').text().replace("'s Room", "");
-
-    player = JSON.parse($('#PlayerCharacter').val());
-    message = JSON.parse($('#CurrentMessage').val());
+    roomOwnerName = $('#Room_OwnerName').text();
 
     //  Alert everyone of the new user
     connection.invoke("ConnectUser", player, roomOwnerId);
@@ -142,15 +145,11 @@ sendButton.addEventListener("click", function (e) {
     message.text = text;
 
     if (isprivate) {
-        var toOwner;
-
         if (message.senderId === roomOwnerId) {
-            toOwner = false;
             message.receiverId = $("#user-selections").val();
             message.receiverName = $("#user-selections :selected").text();
         }
         else {
-            toOwner = true;
             message.receiverId = roomOwnerId;
             message.receiverName = roomOwnerName;
         }

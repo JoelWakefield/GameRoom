@@ -5,30 +5,24 @@
     <h4>@Model.Name</h4>
     <hr />
 
-    <div id="header" class="row mb-2 justify-content-around parchment-light">
-        <div class="col-4">
-            <h5 class="pt-1">
-                @Html.DisplayNameFor(model => model.Class) -
-                @Html.DisplayFor(model => model.Class)
-            </h5>
+    <div id="header" class="row justify-content-around parchment-light">
+        <div class="row col-lg-4 col-md-12 justify-content-between">
+            <div class="col-md-3">@Html.DisplayNameFor(model => model.Class):</div>
+            <div class="col-md-8">@Html.DisplayFor(model => model.Class)</div>
         </div>
-        <div class="col-2">
-            <h5 class="pt-1">
-                @Html.DisplayNameFor(model => model.Level) -
-                @Html.DisplayFor(model => model.Level)
-            </h5>
+        <div class="row col-lg-3 col-md-12 justify-content-between">
+            <div class="col-md-3">@Html.DisplayNameFor(model => model.Level):</div>
+            <div class="col-md-8">@Html.DisplayFor(model => model.Level)</div>
         </div>
-        <div class="col-4">
-            <h5 class="pt-1">
-                @Html.DisplayNameFor(model => model.Race) -
-                @Html.DisplayFor(model => model.Race)
-            </h5>
+        <div class="row col-lg-5 col-md-12 justify-content-between">
+            <div class="col-md-3">@Html.DisplayNameFor(model => model.Race):</div>
+            <div class="col-md-8">@Html.DisplayFor(model => model.Race)</div>
         </div>
     </div>
 
     <div id="body">
         <div class="card-deck mb-4">
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Stats)</h5>
                     <p class="card-text">
@@ -36,7 +30,7 @@
                     </p>
                 </div>
             </div>
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Attributes)</h5>
                     <p class="card-text">
@@ -46,7 +40,7 @@
             </div>
         </div>
         <div class="card-deck mb-4">
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Abilities)</h5>
                     <p class="card-text">
@@ -54,7 +48,7 @@
                     </p>
                 </div>
             </div>
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Skills)</h5>
                     <p class="card-text">
@@ -64,7 +58,7 @@
             </div>
         </div>
         <div class="card-deck mb-4">
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Items)</h5>
                     <p class="card-text">
@@ -72,7 +66,7 @@
                     </p>
                 </div>
             </div>
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Weapons)</h5>
                     <p class="card-text">
@@ -80,7 +74,7 @@
                     </p>
                 </div>
             </div>
-            <div class="card parchment-light">
+            <div class="card parchment-light col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayNameFor(model => model.Spells)</h5>
                     <p class="card-text">
@@ -97,5 +91,9 @@
     .parchment-light {
         background-color: lightgreen;
         border-radius: 10px;
+    }
+    #header {
+        font-size: large;
+        margin: 0.8em 0.4em;
     }
 </style>
