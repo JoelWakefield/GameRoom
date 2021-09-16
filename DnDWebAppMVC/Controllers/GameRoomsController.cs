@@ -260,63 +260,6 @@ namespace DnDWebAppMVC.Controllers
             return View("Room",game);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> Send(Game game)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var message = game.CurrentMessage;
-
-        //        message.Id = Guid.NewGuid();
-        //        message.SentOn = DateTime.Now;
-        //        message.SenderId = game.PlayerCharacter.OwnerId;
-
-        //        var roomId = game.Room.Id;
-        //        message.RoomId = roomId;
-
-        //        var senderProfile = await GetProfile(message.SenderId);
-        //        message.SenderProfile = senderProfile.NickName;
-        //        message.SenderName = game.PlayerCharacter.Name;
-
-        //        if (message.IsPrivate)
-        //        {
-        //            UserProfile receiverProfile;
-
-        //            if (message.SenderId == game.Room.OwnerId)
-        //                receiverProfile = await GetProfile(message.ReceiverId);
-        //            else
-        //                receiverProfile = await GetProfile(game.Room.OwnerId);
-
-        //            message.ReceiverProfile = receiverProfile.NickName;
-        //            message.ReceiverName = game.PlayerCharacter.Name;
-        //        }
-        //        else
-        //        {
-        //            message.ReceiverId = Guid.Empty;
-        //        }
-
-        //        //_context.Add(message);
-        //        //await _context.SaveChangesAsync();
-
-        //        _messageHelper.Set(message);
-        //        game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
-                
-        //        game.CurrentMessage = null;
-
-        //        return PartialView("GameMessages", game);
-        //    }
-
-        //    return NotFound();
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> Refresh(Game game)
-        //{
-        //    game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
-        //    game.Characters = _characterHelper.Get();
-        //    return PartialView("GameMessages", game);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Deactivate(Guid id)
         {
