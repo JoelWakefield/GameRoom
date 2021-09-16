@@ -138,24 +138,30 @@ sendButton.addEventListener("click", function (e) {
     if (text === "")
         return alert("please enter some kind of message");
 
-    var isprivate = ($('#isPrivate:checked').val() === undefined ? false : true);
-    message.isPrivate = isprivate;
-    console.log(`${username} > [${isprivate}]: ${text}`);
-
     message.text = text;
 
-    if (isprivate) {
-        if (message.senderId === roomOwnerId) {
-            message.receiverId = $("#user-selections").val();
+    var isprivate = false;
+    if (message.senderId === roomOwnerId) {
+        var selectionValue = $("#user-selections").val();
+
+        if (selectionValue !== "-1") {
+            isprivate = true;
+            message.receiverId = selectionValue
             message.receiverName = $("#user-selections :selected").text();
         }
-        else {
+    } else {
+        isprivate = ($('#isPrivate:checked').val() === undefined ? false : true);
+
+        if (isprivate) {
             message.receiverId = roomOwnerId;
             message.receiverName = roomOwnerName;
         }
+    }
 
-        console.log(message);
+    message.isPrivate = isprivate;
+    console.log(message);
 
+    if (isprivate) {
         connection.invoke("SendPrivateMessage", message).then(function () {
             messageInput.value = "";
         }).catch(function (err) {

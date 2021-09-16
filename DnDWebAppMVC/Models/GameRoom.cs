@@ -28,5 +28,7 @@ namespace DnDWebAppMVC.Models
         public string Description { get; set; }
         [JsonProperty(PropertyName = "isActive")]
         public bool IsActive { get; set; }
+        [JsonProperty(PropertyName = "isOpen")]
+        public bool IsOpen { get; set; }
     }
 }

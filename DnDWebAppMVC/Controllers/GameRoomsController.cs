@@ -88,9 +88,8 @@ namespace DnDWebAppMVC.Controllers
             {
                 room.Id = Guid.NewGuid();
                 room.CreatedOn = DateTime.Now;
-                room.Password = RandomString(6);
                 room.IsActive = true;
-                
+
                 await _cosmosDbHelper.CreateGameRoomAsync(room);
 
                 return RedirectToAction(nameof(Index));
@@ -180,6 +179,11 @@ namespace DnDWebAppMVC.Controllers
             if (room == null)
                 return NotFound();
 
+            room.Password = RandomString(6);
+            room.IsOpen = true;
+
+            _cosmosDbHelper.UpdateGameRoomAsync(room);
+
             var message = new Message
             {
                 SenderId = character.OwnerId,
@@ -192,7 +196,7 @@ namespace DnDWebAppMVC.Controllers
                 Room = room,
                 PlayerCharacter = character,
                 CurrentMessage = message,
-                Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
+                //Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
                 Characters = _characterHelper.Get()
             };
 
@@ -225,6 +229,12 @@ namespace DnDWebAppMVC.Controllers
             if (room == null)
                 return NotFound();
 
+            if (!room.IsActive)
+                return NotFound("This room is no longer active.");
+
+            if (!room.IsOpen)
+                return NotFound("This room is not open.");
+
             var message = new Message
             {
                 SenderId = character.OwnerId,
@@ -237,7 +247,7 @@ namespace DnDWebAppMVC.Controllers
                 Room = room,
                 PlayerCharacter = character,
                 CurrentMessage = message,
-                Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
+                //Messages = _messageHelper.Get(character.OwnerId, room.OwnerId),
                 Characters = _characterHelper.Get()
             };
 
@@ -250,71 +260,76 @@ namespace DnDWebAppMVC.Controllers
             return View("Room",game);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Send(Game game)
-        {
-            if (ModelState.IsValid)
-            {
-                var message = game.CurrentMessage;
+        //[HttpPost]
+        //public async Task<ActionResult> Send(Game game)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var message = game.CurrentMessage;
 
-                message.Id = Guid.NewGuid();
-                message.SentOn = DateTime.Now;
-                message.SenderId = game.PlayerCharacter.OwnerId; // should be internal
+        //        message.Id = Guid.NewGuid();
+        //        message.SentOn = DateTime.Now;
+        //        message.SenderId = game.PlayerCharacter.OwnerId;
 
-                var roomId = game.Room.Id;
-                message.RoomId = roomId;
+        //        var roomId = game.Room.Id;
+        //        message.RoomId = roomId;
 
-                var senderProfile = await GetProfile(message.SenderId);
-                message.SenderProfile = senderProfile.NickName;
-                message.SenderName = game.PlayerCharacter.Name;
+        //        var senderProfile = await GetProfile(message.SenderId);
+        //        message.SenderProfile = senderProfile.NickName;
+        //        message.SenderName = game.PlayerCharacter.Name;
 
-                if (message.IsPrivate)
-                {
-                    UserProfile receiverProfile;
+        //        if (message.IsPrivate)
+        //        {
+        //            UserProfile receiverProfile;
 
-                    if (message.SenderId == game.Room.OwnerId)
-                        receiverProfile = await GetProfile(message.ReceiverId);
-                    else
-                        receiverProfile = await GetProfile(game.Room.OwnerId);
+        //            if (message.SenderId == game.Room.OwnerId)
+        //                receiverProfile = await GetProfile(message.ReceiverId);
+        //            else
+        //                receiverProfile = await GetProfile(game.Room.OwnerId);
 
-                    message.ReceiverProfile = receiverProfile.NickName;
-                    message.ReceiverName = game.PlayerCharacter.Name;
-                }
-                else
-                {
-                    message.ReceiverId = Guid.Empty;
-                }
+        //            message.ReceiverProfile = receiverProfile.NickName;
+        //            message.ReceiverName = game.PlayerCharacter.Name;
+        //        }
+        //        else
+        //        {
+        //            message.ReceiverId = Guid.Empty;
+        //        }
 
-                //_context.Add(message);
-                //await _context.SaveChangesAsync();
+        //        //_context.Add(message);
+        //        //await _context.SaveChangesAsync();
 
-                _messageHelper.Set(message);
-                game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
+        //        _messageHelper.Set(message);
+        //        game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
                 
-                game.CurrentMessage = null;
+        //        game.CurrentMessage = null;
 
-                return PartialView("GameMessages", game);
-            }
+        //        return PartialView("GameMessages", game);
+        //    }
 
-            return NotFound();
-        }
+        //    return NotFound();
+        //}
 
-        [HttpPost]
-        public async Task<ActionResult> Refresh(Game game)
-        {
-            game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
-            game.Characters = _characterHelper.Get();
-            return PartialView("GameMessages", game);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult> Refresh(Game game)
+        //{
+        //    game.Messages = _messageHelper.Get(game.PlayerCharacter.Id, game.Room.OwnerId);
+        //    game.Characters = _characterHelper.Get();
+        //    return PartialView("GameMessages", game);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         public async Task<IActionResult> Deactivate(Guid id)
         {
             if (id == Guid.Empty)
                 return NotFound();
 
-            return RedirectToAction(nameof(Details), id);
+            var room = await _cosmosDbHelper.GetGameRoom(id);
+            room.IsOpen = false;
+            room.IsActive = false;
+            room.ClosedOn = DateTime.Now;
+            await _cosmosDbHelper.UpdateGameRoomAsync(room);
+
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         // GET: GameRooms/Delete/{id}

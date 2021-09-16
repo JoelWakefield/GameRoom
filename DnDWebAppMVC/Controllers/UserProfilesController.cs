@@ -22,7 +22,7 @@ namespace DnDWebAppMVC.Controllers
         // GET: UserProfiles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserProfiles.ToListAsync());
+            return View(await GetProfiles());
         }
 
         // GET: UserProfiles/Details/5
@@ -137,6 +137,14 @@ namespace DnDWebAppMVC.Controllers
         private bool UserProfileExists(Guid id)
         {
             return _context.UserProfiles.Any(e => e.Id == id);
+        }
+
+        private async Task<IEnumerable<UserProfile>> GetProfiles()
+        {
+            var userId = AuthHelper.GetOid(User);
+            return await _context.UserProfiles
+                .Where(p => p.AccountId == userId)
+                .ToListAsync();
         }
     }
 }
